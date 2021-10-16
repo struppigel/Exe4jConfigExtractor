@@ -12,30 +12,29 @@ from tabulate import tabulate
 
 # string values in config
 configPatterns = { 
-	'Short name of application' 			: b'\x65\x00\x00\x00',
-	'Redirect stderr'						: b'\x66\x00\x00\x00',
-	'Error log path' 						: b'\x67\x00\x00\x00', # ends with + if Append activated
-	'Redirect stdout'						: b'\x68\x00\x00\x00', 
-	'Output log path' 						: b'\x69\x00\x00\x00', # ends with = if Append activated
-	'Executable type' 						: b'\x6B\x00\x00\x00', # 4 is service, 2 is console, 1 is GUI
-	'Show splash screen' 					: b'\x6C\x00\x00\x00',
-	'Main class' 							: b'\x7A\x00\x00\x00',
-	'VM parameters' 						: b'\x7B\x00\x00\x00',
-	'Arguments for main class' 				: b'\x7C\x00\x00\x00',
-	'Allow VM passthrough parameters' 		: b'\x7D\x00\x00\x00',
-	'JRE search sequence' 					: b'\x80\x00\x00\x00',
-	'Change working dir to' 				: b'\x92\x00\x00\x00', # empty if not set
-	'Preferred VM'			 				: b'\x98\x00\x00\x00', # Client Hotspot, Server Hotspot; Default VM if not set
-	'Allow -console parameter' 				: b'\x9C\x00\x00\x00',
-	'Show splash screen text' 				: b'\xA3\x00\x00\x00',
-	'Allow single instance run' 			: b'\x15\x27\x00\x00',
-	'Splash screen status X position' 		: b'\x7D\x27\x00\x00',
-	'Splash screen status Y position' 		: b'\x7E\x27\x00\x00',
-	'Splash screen status line' 			: b'\x7F\x27\x00\x00',
-	'Splash screen version X position' 		: b'\x84\x27\x00\x00',
-	'Splash screen version Y position' 		: b'\x85\x27\x00\x00',
-	'Splash screen version line' 			: b'\x86\x27\x00\x00'
-	#'Nr of version specific VM parameters'	: b'\xD8\x27\x00\x00'
+	'Short name of application' 		: b'\x65\x00\x00\x00',
+	'Redirect stderr'			: b'\x66\x00\x00\x00',
+	'Error log path' 			: b'\x67\x00\x00\x00', # ends with + if Append activated
+	'Redirect stdout'			: b'\x68\x00\x00\x00', 
+	'Output log path' 			: b'\x69\x00\x00\x00', # ends with = if Append activated
+	'Executable type' 			: b'\x6B\x00\x00\x00', # 4 is service, 2 is console, 1 is GUI
+	'Show splash screen' 			: b'\x6C\x00\x00\x00',
+	'Main class' 				: b'\x7A\x00\x00\x00',
+	'VM parameters' 			: b'\x7B\x00\x00\x00',
+	'Arguments for main class' 		: b'\x7C\x00\x00\x00',
+	'Allow VM passthrough parameters' 	: b'\x7D\x00\x00\x00',
+	'JRE search sequence' 			: b'\x80\x00\x00\x00',
+	'Change working dir to' 		: b'\x92\x00\x00\x00', # empty if not set
+	'Preferred VM'			 	: b'\x98\x00\x00\x00', # Client Hotspot, Server Hotspot; Default VM if not set
+	'Allow -console parameter' 		: b'\x9C\x00\x00\x00',
+	'Show splash screen text' 		: b'\xA3\x00\x00\x00',
+	'Allow single instance run' 		: b'\x15\x27\x00\x00',
+	'Splash screen status X position' 	: b'\x7D\x27\x00\x00',
+	'Splash screen status Y position' 	: b'\x7E\x27\x00\x00',
+	'Splash screen status line' 		: b'\x7F\x27\x00\x00',
+	'Splash screen version X position' 	: b'\x84\x27\x00\x00',
+	'Splash screen version Y position' 	: b'\x85\x27\x00\x00',
+	'Splash screen version line' 		: b'\x86\x27\x00\x00'
 }
 	
 executable_type = {
