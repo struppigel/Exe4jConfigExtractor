@@ -109,8 +109,6 @@ def constructJavaSearchSequence(value):
 			result_string += 'Environmental variable: ' + v[1:]
 		elif v.startswith('R'):
 			result_string += 'Directory: ' + v[1:]
-		else:
-			result_string += 'Unknown option: ' + v[1:]
 		result_string +=  '\n'
 	if result_string.endswith('\n'): result_string = result_string[:-1]
 	return result_string
@@ -130,7 +128,7 @@ def constructClassPath(value):
 	}
 	for v in values:
 		if len(v) <= 1: continue
-		result_string += opt_type.get(v[0], 'Unknown option') + ' (' + opt_fail.get(v[1], 'Unknown option') + ' ): ' + v[2:] + '\n'
+		result_string += opt_type.get(v[0], 'Unknown option') + ' (' + opt_fail.get(v[1], 'Unknown option') + '): ' + v[2:] + '\n'
 	if result_string.endswith('\n'): result_string = result_string[:-1]
 	return result_string	
 	
@@ -222,3 +220,4 @@ if __name__ == "__main__":
 		print('PE File is not an EXE4J file!')
 	print('')
 	print('All done')
+	
