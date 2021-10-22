@@ -19,6 +19,7 @@ configPatterns = {
 	'Output log path' 			: b'\x69\x00\x00\x00', # ends with = if Append activated
 	'Executable type' 			: b'\x6B\x00\x00\x00', # 4 is service, 2 is console, 1 is GUI
 	'Show splash screen' 			: b'\x6C\x00\x00\x00',
+	'Class path'				  : b'\x79\x00\x00\x00',
 	'Main class' 				: b'\x7A\x00\x00\x00',
 	'VM parameters' 			: b'\x7B\x00\x00\x00',
 	'Arguments for main class' 		: b'\x7C\x00\x00\x00',
@@ -101,15 +102,37 @@ def constructJavaSearchSequence(value):
 	result_string = ''
 	values = value.split(';')
 	for v in values:
+		if len(v) == 0: continue
 		if v == 'Y':
 			result_string += 'Search Windows registry'
 		elif v.startswith('E'):
 			result_string += 'Environmental variable: ' + v[1:]
 		elif v.startswith('R'):
 			result_string += 'Directory: ' + v[1:]
-		result_string += '; '
-	if result_string.endswith('; '): result_string = result_string[:-2]
+		else:
+			result_string += 'Unknown option: ' + v[1:]
+		result_string +=  '\n'
+	if result_string.endswith('\n'): result_string = result_string[:-1]
 	return result_string
+	
+def constructClassPath(value):
+	result_string = ''
+	values = value.split(';')
+	opt_type = {
+		'A' : 'Archive',
+		'D' : 'Directory',
+		'S' : 'Scan Directory',
+		'E' : 'Environment variable'
+	}
+	opt_fail = {
+		'1' : 'Fail on error',
+		'0' : 'Don\'t fail on error'
+	}
+	for v in values:
+		if len(v) <= 1: continue
+		result_string += opt_type.get(v[0], 'Unknown option') + ' (' + opt_fail.get(v[1], 'Unknown option') + ' ): ' + v[2:] + '\n'
+	if result_string.endswith('\n'): result_string = result_string[:-1]
+	return result_string	
 	
 def offsetToEmbeddedZIP(exefile):
 	return searchPattern(b'\x50\x4B\x03\x04', exefile, 0)
@@ -131,7 +154,7 @@ def extractConfig(exefile):
 		print("This is an install4j executable!")
 	config_offset += overlay
 	
-	print('EXE4j configuration found at offset', hex(overlay + config_offset))
+	print('EXE4j configuration found at offset', hex(config_offset))
 	manifest_offset = offsetToEmbeddedJarManifest(exefile)
 	print('Embedded Jar manifest offset', hex(manifest_offset) if manifest_offset != -1 else 'not found')
 	zip_offset = offsetToEmbeddedZIP(exefile)
@@ -139,6 +162,10 @@ def extractConfig(exefile):
 	print("")
 	
 	result_table = []
+
+	# read checksum in config
+	checksum_bytes = extract(config_offset + 8, 4, exefile)
+	result_table.append(['Checksum', '0x' + checksum_bytes.hex()])
 	
 	for description, pattern in configPatterns.items():
 		value = extractConfigEntry(config_offset, pattern, exefile)
@@ -154,6 +181,9 @@ def extractConfig(exefile):
 				
 		elif description == 'JRE search sequence':
 			value = constructJavaSearchSequence(value)
+
+		elif description == 'Class path':
+			value = constructClassPath(value)
 			
 		elif description == 'Preferred VM':
 			value = preferred_vm.get(value, value)
@@ -192,4 +222,3 @@ if __name__ == "__main__":
 		print('PE File is not an EXE4J file!')
 	print('')
 	print('All done')
-	
