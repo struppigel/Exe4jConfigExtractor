@@ -19,7 +19,7 @@ configPatterns = {
 	'Output log path' 			: b'\x69\x00\x00\x00', # ends with = if Append activated
 	'Executable type' 			: b'\x6B\x00\x00\x00', # 4 is service, 2 is console, 1 is GUI
 	'Show splash screen' 			: b'\x6C\x00\x00\x00',
-	'Class path'				  : b'\x79\x00\x00\x00',
+	'Class path'				: b'\x79\x00\x00\x00',
 	'Main class' 				: b'\x7A\x00\x00\x00',
 	'VM parameters' 			: b'\x7B\x00\x00\x00',
 	'Arguments for main class' 		: b'\x7C\x00\x00\x00',
