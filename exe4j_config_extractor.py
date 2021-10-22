@@ -20,6 +20,7 @@ configPatterns = {
 	'Executable type' 			: b'\x6B\x00\x00\x00', # 4 is service, 2 is console, 1 is GUI
 	'Show splash screen' 			: b'\x6C\x00\x00\x00',
 	'Class path'				: b'\x79\x00\x00\x00',
+	'Module path'				: b'\x84\x00\x00\x00',
 	'Main class' 				: b'\x7A\x00\x00\x00',
 	'VM parameters' 			: b'\x7B\x00\x00\x00',
 	'Arguments for main class' 		: b'\x7C\x00\x00\x00',
@@ -181,6 +182,9 @@ def extractConfig(exefile):
 			value = constructJavaSearchSequence(value)
 
 		elif description == 'Class path':
+			value = constructClassPath(value)
+		
+		elif description == 'Module path':
 			value = constructClassPath(value)
 			
 		elif description == 'Preferred VM':
